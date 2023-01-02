@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+
+    <input type="button" id="btn1" onclick="btn_click();" value="버튼"/>
+
+
+
+</button>
+
+<script>
+function btn_click() {
+    console.log("button click")
+    alert("btn1")
+}
+</script>
+    
+
+
+var winLeft = window.screenX ? window.screenX : window.screenLeft;
+var winTop = 0;
+
+$(document).ready(function(){
+
+    <!-- //메인화면 이미지 변경
+    //계절별 이미지 셋팅  3~5 봄,   6~8 여름, 9~11 가을, 12~2 겨울 -->
+
+    var today = new Date();
+    var mainNowMonth = today.getMonth();
+    var mainBackImgArr = ["bg_main_winter.jpg","bg_main_winter.jpg","bg_main_spring.jpg","bg_main_spring.jpg","bg_main_spring.jpg","bg_main_summer.jpg","bg_main_summer.jpg","bg_main_summer.jpg","bg_main_autumn.jpg","bg_main_autumn.jpg","bg_main_autumn.jpg","bg_main_winter.jpg"];
+    var mainBackImg = "/images/common/"+mainBackImgArr[mainNowMonth];
+    $("#mainBackImg").css({"background":"url("+mainBackImg+")"});
+
+    <!-- // 		$("#mainBackImg").css("height","628px");		//로그인전 628 로그인후 838  -->
+    
+    <!-- /*
+    var mainBgGubun = '';
+    if(mainBgGubun=='search'){
+        $("#mainBackImg").css({"background":"url('/images/common/bg_main02.jpg')"});
+    }
+    else
+
+    {
+// 			$("#mainBackImg").css({"background":"url('/images/common/bg_main02.jpg')"});
+
+$("#mainBackImg").css({"background":"url("+mainBackImg+")"});
+    }
+    */ -->
+  
+  
+    $("#mainBackImg").css({"background-repeat":"round"});
+    
+    
+    if("" && "" == 'true') { 
+        var chkEmail = "";
+        if(chkEmail == "") {
+
+            <!-- // 				alert('이메일 정보가 없습니다.\n이메일 정보를 업데이트해주세요');
+
+                // 				location.href="/mypage/myPage/myPageMberInfoCheck.do"; -->
+
+var cnfirm = confirm("이메일 정보가 없습니다.\n이메일 정보를 업데이트해주세요");
+            if(cnfirm) location.href="/mypage/myPage/myPageMberInfoCheck.do";
+        }
+        
+        <!-- // 전화번호, 휴대전화번호 두개 다 가지고 있는 사람 확인 후 팝업 호출
+        // 추후 재등록하는 것으로 변경 byc 2022-01-06 -->
+        chkUserTelno();
+    }
+    
+    //popupSubList();
+    
+    
+
+    
+});
+
+/**
+ * 메인팝업
+ */
+popupList = function(popupNoticeSn, popWidth, popHeight){
+    var cookieData = document.cookie;
+    if(cookieData.indexOf("openMainPopup"+popupNoticeSn+"=true") > -1 ){//2015-11-10 추가
+    }else{
+        popHeight =  parseInt(popHeight)+120;
+        var win = window.open("/com/main/popupMainPop.do" + "?popupNoticeSn=" + popupNoticeSn+"&amp;popupWidthLt="+popWidth+"&amp;popupVrticlLt="+popHeight, "popupNoticeSn" + popupNoticeSn, "width=" + popWidth + ",height=" + popHeight + ",left=" + winLeft + ",top=" + winTop, "_blank");
+        winLeft = winLeft + parseInt(popHeight) + 150;
+    }
+};
+
+/**
+ * 메인팝업
+ */
+popupSubList = function(){
+    var popWidth = "700";
+    var popHeight = "375";
+    var cookieData = document.cookie;
+    if(cookieData.indexOf("subOpen=true") > -1 ){//2015-11-10 추가
+    }else{
+        var win = window.open("/html/popupSubPop.html","subPopup","width=" + popWidth + ",height=" + popHeight, "_blank");
+    }
+};
+
+/**
+ * 설문조사
+ */
+qustList = function(qestnrId){
+    var popWidth = "700";
+    var popHeight = "900";
+    var winLeftQust = window.screenX ? window.screenX : window.screenLeft;
+    var winTopQust = 0;
+    var cookieData = document.cookie;
+    if(cookieData.indexOf("openMainQestnr"+qestnrId+"=true") > -1 ){
+    }else{
+        var win = window.open("/com/main/qustMainPop.do" + "?qestnrId=" + qestnrId, "openMainQestnr" + qestnrId, "width=" + popWidth + ",height=" + popHeight + ",left=" + winLeftQust + ",top=" + winTopQust, "_blank");
+    }
+};
+
+/**
+ * 정보공개포털 새이름  설문조사
+ */
+qustNewList = function(){
+    var popWidth = "700";
+    var popHeight = "900";
+    var winLeftQust = window.screenX ? window.screenX : window.screenLeft;
+    var winTopQust = 0;
+    var cookieData = document.cookie;
+    //7일간 보지않기 체크박스 체크 안한 경우 
+    if(cookieData.indexOf("notOpen=true") < 0){
+        var win = window.open("/com/main/qustMainJoinNewPop.do", "openMainQestnr", "width=" + popWidth + ",height=" + popHeight + ",left=" + winLeftQust + ",top=" + winTopQust+",resizable=yes ,scrollbars=yes", "_blank");
+    }
+};
+
+/**
+ * 배너 팝업 함수
+ */
+main_banner_popup = function(linkUrl, popupLt, popupHg, infoSj){
+    var url = linkUrl;
+    
+    var option = new Object();
+    option.width  = popupLt;
+    option.height = popupHg;
+    option.title  = infoSj;
+    option.type   = "window";
+    
+    var param = new Object();
+    util_modalPage(url, option, param);
+};	
+
+// 전화번호, 휴대전화번호 두개 다 가지고 있는 사람 확인 후 한가지만 남기도록 하는 팝업 화면 호출
+chkUserTelno =function() {
+    //유사검색 AJAX 호출
+    var strUrl   = "/com/main/isChangeTelNo.ajax";
+       var param = new Object();
+       var callBackFn      = "chkUserTelno_callBack";
+       util_ajax(strUrl, param, callBackFn);   
+};
+
+chkUserTelno_callBack = function(result) {
+    var cookieData = document.cookie;
+    
+    if(result.isChangeTelNoYn == "Y") {
+        if(cookieData.indexOf("openChangeTelNo=true") > -1 ){
+            
+        } else {
+            var param = new Object();
+            param.returnURL = "/com/main/mainView.do";
+            
+            jQuery(this).JQmodal({
+                 popUrl        : "/com/main/changeTelNoPop.do"
+                ,type          : "modal"
+                ,width         : "600"
+                ,height        : "700"
+                ,bgColor  : "#fff"
+                ,opacityBg : "0.7"
+                ,param         : param
+            });
+        }
+    }
+};
+
+
+
+
+
+</body>
+</html>
