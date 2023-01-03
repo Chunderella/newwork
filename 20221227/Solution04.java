@@ -22,7 +22,7 @@
 문제풀이
 
 
-class Solution {
+class Solution04 {
 
 public int solution(int[] array, int height) {
 
