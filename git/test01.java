@@ -5,6 +5,8 @@ public class test {
         System.out.println("commit -1(new)")
         System.out.println("commit -2(new)")
 System.out.println("commit -3(new)")
+        System.out.println("commit -2(new)")
+System.out.println("commit -3(new)")
 
 
 
